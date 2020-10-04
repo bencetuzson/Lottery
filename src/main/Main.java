@@ -128,10 +128,12 @@ public class Main {
                 biggerNums.clear();
                 smallerNums.clear();
                 for (int num : ret) {
-                    if (num > lottery.getNumbers()) {
-                        biggerNums.add(num);
-                    } else if (num < 1) {
-                        smallerNums.add(num);
+                    if (!biggerNums.contains(num)){
+                        if (num > lottery.getNumbers()) {
+                            biggerNums.add(num);
+                        } else if (num < 1) {
+                            smallerNums.add(num);
+                        }
                     }
                 }
 
