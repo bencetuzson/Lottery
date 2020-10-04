@@ -1,5 +1,6 @@
 package main.model;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -12,9 +13,11 @@ public class Lottery {
     Random rand = new Random();
 
     public Lottery(int numbers, int selected) {
-        this.numbers = numbers;
-        this.selected = selected;
+        setNumbers(numbers);
+        setSelected(selected);
     }
+
+    public Lottery() {}
 
     public void select(int... numbers) {
         selNums.clear();
@@ -75,20 +78,48 @@ public class Lottery {
         return ret;
     }
 
+    private static BigInteger factorial(int value) {
+        if(value < 0){
+            throw new IllegalArgumentException("Value must be positive");
+        }
+
+        BigInteger result = BigInteger.ONE;
+        for (int i = 2; i <= value; i++) {
+            result = result.multiply(BigInteger.valueOf(i));
+        }
+
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Your numbers: " + Arrays.toString(selNums.toArray()).replace("[", "").replace("]", "") +
-                "\nWinner numbers: " + Arrays.toString(winNums.toArray()).replace("[", "").replace("]", "") +
-                "\nThe number of numbers you got right: " + num() + " out of " + selected + (num() > 0 ? " (the number" + (num() > 1 ? "s" : "") + ": " + right().toString().replace("[", "").replace("]", "") + ")" : "");
+             "\nWinner numbers: " + Arrays.toString(winNums.toArray()).replace("[", "").replace("]", "") +
+             "\nThe number of numbers you got right: " + num() + " out of " + selected + (num() > 0 ? " (the number" + (num() > 1 ? "s" : "") + ": " + right().toString().replace("[", "").replace("]", "") + ")" : "") +
+             "\nThe number of combinations possible: " + (factorial(numbers).divide((factorial(selected).multiply(factorial(numbers - selected)))));
     }
 
 
-    public void setNumbers(int numbers) {
-        this.numbers = numbers;
+    public void setNumbers(int numbers) throws IllegalArgumentException{
+        try {
+            this.numbers = numbers;
+            if (numbers < 1) {
+                throw new IllegalArgumentException("Number cannot be smaller than 1!");
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid parameter!");
+        }
     }
 
-    public void setSelected(int selected) {
-        this.selected = selected;
+    public void setSelected(int selected) throws IllegalArgumentException{
+        try {
+            this.selected = selected;
+            if (selected < 1) {
+                throw new IllegalArgumentException("Number cannot be smaller than 1!");
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid parameter!");
+        }
     }
 
     public int getNumbers() {

@@ -12,6 +12,7 @@ public class Main {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static Lottery lottery;
     private static String input;
+    private static boolean err;
     private static final ArrayList<Integer> biggerNums = new ArrayList<>();
     private static final ArrayList<Integer> smallerNums = new ArrayList<>();
 
@@ -21,6 +22,38 @@ public class Main {
             case 1 -> lottery = new Lottery(90, 5);
             case 2 -> lottery = new Lottery(45, 6);
             case 3 -> lottery = new Lottery(35, 7);
+            case 4 -> {
+                lottery = new Lottery();
+                do {
+                    err = false;
+                    try {
+                        try {
+                            System.out.println("Maximum number can be selected:");
+                            lottery.setNumbers(Integer.parseInt(reader.readLine()));
+                        } catch (NumberFormatException e) {
+                            throw new IllegalArgumentException("Invalid parameter!");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.err.println(e.getMessage());
+                        err = true;
+                    }
+                } while (err);
+                do{
+                    err = false;
+                    try {
+                        try {
+                            System.out.println("Number of numbers can be selected:");
+                            lottery.setSelected(Integer.parseInt(reader.readLine()));
+                        } catch (NumberFormatException e) {
+                            throw new IllegalArgumentException("Invalid parameter!");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.err.println(e.getMessage());
+                        err = true;
+                    }
+                } while (err);
+
+            }
             default -> throw new UnexpectedException("Unexpected error!");
         }
         lottery.select(ask());
@@ -34,6 +67,7 @@ public class Main {
         System.out.println("1) Ötös Lottó");
         System.out.println("2) Hatos Lottó");
         System.out.println("3) Skandináv Lottó");
+        System.out.println("4) Custom");
         do {
             input = reader.readLine();
             try{
@@ -43,7 +77,7 @@ public class Main {
             }
         } while(
             switch (mode) {
-                case 0, 1, 2, 3 -> false;
+                case 0, 1, 2, 3, 4 -> false;
                 default -> {
                     if (!input.equals("")) {
                         System.err.println("Invalid parameter, try again!");
@@ -56,7 +90,6 @@ public class Main {
     }
 
     private static int[] ask() throws IOException {
-        boolean err;
         int i;
         int[] ret;
         System.out.println("Type your " + lottery.getSelected() + " numbers here (minimum 1, maximum " + lottery.getNumbers() + " and separated by space):");
