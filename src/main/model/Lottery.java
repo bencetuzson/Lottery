@@ -79,7 +79,7 @@ public class Lottery {
     public String toString() {
         return "Your numbers: " + Arrays.toString(selNums.toArray()).replace("[", "").replace("]", "") +
                 "\nWinner numbers: " + Arrays.toString(winNums.toArray()).replace("[", "").replace("]", "") +
-                "\nThe number of numbers you got right: " + num() + (num() > 0 ? " (the number" + (num() > 1 ? "s" : "") + ": " + right().toString().replace("[", "").replace("]", "") + ")" : "");
+                "\nThe number of numbers you got right: " + num() + " out of " + selected + (num() > 0 ? " (the number" + (num() > 1 ? "s" : "") + ": " + right().toString().replace("[", "").replace("]", "") + ")" : "");
     }
 
 

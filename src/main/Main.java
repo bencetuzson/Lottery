@@ -86,20 +86,22 @@ public class Main {
             }
 
             if (!err) {
-                if (input.split(" ").length < lottery.getSelected() && !input.equals("")){
+                if (input.split(" ").length < lottery.getSelected() && !input.equals("")) {
                     System.err.println("Too little arguments, try again!");
                     err = true;
                 }
-
+            }
+            if (!err && input.split(" ").length == lottery.getSelected()) {
                 biggerNums.clear();
                 smallerNums.clear();
                 for (int num : ret) {
                     if (num > lottery.getNumbers()) {
                         biggerNums.add(num);
-                    } else if (num < 1){
+                    } else if (num < 1) {
                         smallerNums.add(num);
                     }
                 }
+
                 if (biggerNums.size() > 0) {
                     System.err.println("Selected number" + (biggerNums.size() > 1 ? "s" : "") + " (" + biggerNums.toString().replace("[", "").replace("]", "") + ") " + (biggerNums.size() > 1 ? "are" : "is") + " greater than the maximum number possible (" + lottery.getNumbers() + "), try again!");
                     err = true;
@@ -108,18 +110,21 @@ public class Main {
                     System.err.println("Selected number" + (smallerNums.size() > 1 ? "s" : "") + " (" + smallerNums.toString().replace("[", "").replace("]", "") + ") " + (smallerNums.size() > 1 ? "are" : "is") + " smaller than the minimum number possible (1), try again!");
                     err = true;
                 }
-
-                biggerNums.clear();
-                for (int j = 0; j < ret.length; j++) {
-                    for (int k = j + 1; k < ret.length; k++) {
-                        if (ret[j] == ret[k]) {
-                            biggerNums.add(ret[j]);
-                            err = true;
+                if (!err) {
+                    biggerNums.clear();
+                    for (int j = 0; j < ret.length; j++) {
+                        for (int k = j + 1; k < ret.length; k++) {
+                            if (ret[j] == ret[k]) {
+                                if (!biggerNums.contains(ret[j])) {
+                                    biggerNums.add(ret[k]);
+                                    err = true;
+                                }
+                            }
                         }
                     }
-                }
-                if (biggerNums.size() > 0) {
-                    System.err.println("Duplicated numbers (" + biggerNums.toString().replace("[", "").replace("]", "") + "), try again!");
+                    if (biggerNums.size() > 0) {
+                        System.err.println("Duplicated numbers (" + biggerNums.toString().replace("[", "").replace("]", "") + "), try again!");
+                    }
                 }
             }
         } while (err);
