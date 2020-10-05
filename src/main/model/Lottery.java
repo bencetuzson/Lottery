@@ -78,17 +78,17 @@ public class Lottery {
         return ret;
     }
 
-    private static BigInteger factorial(int value) {
-        if(value < 0){
+    private static BigInteger factorial(int n) {
+        if (n < 0) {
             throw new IllegalArgumentException("Value must be positive");
         }
 
-        BigInteger result = BigInteger.ONE;
-        for (int i = 2; i <= value; i++) {
-            result = result.multiply(BigInteger.valueOf(i));
+        BigInteger ret = BigInteger.ONE;
+        for (int i = 2; i <= n; i++) {
+            ret = ret.multiply(BigInteger.valueOf(i));
         }
 
-        return result;
+        return ret;
     }
 
     @Override
