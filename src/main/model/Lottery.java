@@ -10,7 +10,7 @@ public class Lottery {
     private int selected;
     private final ArrayList<Integer> selNums = new ArrayList<>();
     private final ArrayList<Integer> winNums = new ArrayList<>();
-    Random rand = new Random();
+    private final Random rand = new Random();
 
     public Lottery(int numbers, int selected) {
         setNumbers(numbers);
