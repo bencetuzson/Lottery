@@ -93,8 +93,8 @@ public class Lottery {
 
     @Override
     public String toString() {
-        return "Your numbers: " + Arrays.toString(selNums.toArray()).replace("[", "").replace("]", "") +
-             "\nWinner numbers: " + Arrays.toString(winNums.toArray()).replace("[", "").replace("]", "") +
+        return "Your number" + (selNums.size() > 1 ? "s" : "") + ": " + Arrays.toString(selNums.toArray()).replace("[", "").replace("]", "") +
+             "\nWinner number" + (winNums.size() > 1 ? "s" : "") + ": " + Arrays.toString(winNums.toArray()).replace("[", "").replace("]", "") +
              "\nThe number of numbers you got right: " + num() + " out of " + selected + (num() > 0 ? " (the number" + (num() > 1 ? "s" : "") + ": " + right().toString().replace("[", "").replace("]", "") + ")" : "") +
              "\nThe number of combinations possible: " + (factorial(numbers).divide((factorial(selected).multiply(factorial(numbers - selected)))));
     }
@@ -102,9 +102,12 @@ public class Lottery {
 
     public void setNumbers(int numbers) throws IllegalArgumentException{
         try {
-            this.numbers = numbers;
-            if (numbers < 1) {
+            if (numbers < selected && selected != 0) {
+                throw new IllegalArgumentException("Number cannot be smaller than the number of numbers can be selected (" + selected + ")!");
+            } else if (numbers < 1) {
                 throw new IllegalArgumentException("Number cannot be smaller than 1!");
+            } else {
+                this.numbers = numbers;
             }
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid parameter!");
@@ -113,10 +116,14 @@ public class Lottery {
 
     public void setSelected(int selected) throws IllegalArgumentException{
         try {
-            this.selected = selected;
-            if (selected < 1) {
+            if (numbers < selected && numbers != 0) {
+                throw new IllegalArgumentException("Number cannot be bigger than the maximum number can be selected (" + numbers + ")!");
+            } else if (selected < 1) {
                 throw new IllegalArgumentException("Number cannot be smaller than 1!");
+            } else {
+                this.selected = selected;
             }
+
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid parameter!");
         }
