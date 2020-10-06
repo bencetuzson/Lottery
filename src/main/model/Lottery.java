@@ -23,7 +23,6 @@ public class Lottery {
         selNums.clear();
         for (int num : numbers) {
             selNums.add(num);
-
         }
     }
 
