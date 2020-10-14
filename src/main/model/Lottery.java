@@ -1,8 +1,9 @@
 package main.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Lottery {
@@ -19,7 +20,7 @@ public class Lottery {
 
     public Lottery() {}
 
-    public void select(int... numbers) {
+    public void select(int @NotNull ... numbers) {
         selNums.clear();
         for (int num : numbers) {
             selNums.add(num);
@@ -41,8 +42,8 @@ public class Lottery {
     }
 
     public boolean[] won() {
-        boolean[] ret = new boolean[winNums.toArray().length];
-        for (int i = 0; i < winNums.toArray().length; ++i) {
+        boolean[] ret = new boolean[winNums.size()];
+        for (int i = 0; i < winNums.size(); ++i) {
             ret[i] = false;
             for (int num : selNums) {
                 if (winNums.get(i) == num) {
@@ -66,9 +67,9 @@ public class Lottery {
 
     public ArrayList<Integer> right() {
         ArrayList<Integer> ret = new ArrayList<>();
-        for (int i = 0; i < winNums.toArray().length; ++i) {
+        for (Integer winNum : winNums) {
             for (int num : selNums) {
-                if (winNums.get(i) == num) {
+                if (winNum == num) {
                     ret.add(num);
                     break;
                 }
@@ -92,8 +93,8 @@ public class Lottery {
 
     @Override
     public String toString() {
-        return "Your number" + (selNums.size() > 1 ? "s" : "") + ": " + Arrays.toString(selNums.toArray()).replace("[", "").replace("]", "") +
-             "\nWinner number" + (winNums.size() > 1 ? "s" : "") + ": " + Arrays.toString(winNums.toArray()).replace("[", "").replace("]", "") +
+        return "Your number" + (selNums.size() > 1 ? "s" : "") + ": " + selNums.toString().replace("[", "").replace("]", "") +
+             "\nWinner number" + (winNums.size() > 1 ? "s" : "") + ": " + winNums.toString().replace("[", "").replace("]", "") +
              "\nThe number of numbers you got right: " + num() + " out of " + selected + (num() > 0 ? " (the number" + (num() > 1 ? "s" : "") + ": " + right().toString().replace("[", "").replace("]", "") + ")" : "") +
              "\nThe number of combinations possible: " + (factorial(numbers).divide((factorial(selected).multiply(factorial(numbers - selected)))));
     }
