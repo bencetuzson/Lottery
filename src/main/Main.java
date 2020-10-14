@@ -92,7 +92,7 @@ public class Main {
     private static int[] ask() throws IOException {
         int i;
         int[] ret;
-        System.out.println("Type your " + lottery.getSelected() + " numbers here (minimum 1, maximum " + lottery.getNumbers() + " and separated by space):");
+        System.out.println("Type your " + lottery.getSelected() + " number" + (lottery.getSelected() > 1 ? "s" : "") + " here (minimum 1, maximum " + lottery.getNumbers() + " and separated by space):");
         do {
             i = 0;
             err = false;
